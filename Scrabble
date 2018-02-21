@@ -1,0 +1,35 @@
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+n = int(input())
+dictionary = []
+for i in range(n):
+    w = input()
+    dictionary.append(w)
+letters = input()
+points = {'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10}
+words = []
+# Write an action using print
+# To debug: print("Debug messages...", file=sys.stderr)
+for word in dictionary:
+    word_letters = {}
+    for x in word:
+        if x in word_letters.keys():
+            word_letters[x] += 1
+        else:
+            word_letters[x] = 1
+    for x in letters:
+        if x in word_letters.keys():
+            word_letters[x] += -1
+    if max([word_letters[x] for x in word_letters.keys()])<1:
+        words.append(word)
+words.reverse()
+max_points = 0
+for word in words:
+    if sum([points[x] for x in word])>=max_points:
+        answer = word
+        max_points = sum([points[x] for x in word])
+print(answer)
