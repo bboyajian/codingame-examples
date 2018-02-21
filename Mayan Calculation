@@ -1,0 +1,55 @@
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+l, h = [int(i) for i in input().split()]
+numerals = []
+for i in range(h):
+    numeral = input()
+    numerals.append(numeral)
+to_mayan = {}
+from_mayan = {}
+for i in range(20):
+    to_mayan[i] = ''.join([numerals[j][i*l:(i+1)*l] for j in range(h)])
+    from_mayan[''.join([numerals[j][i*l:(i+1)*l] for j in range(h)])] = i
+s1 = int(input())
+num_1 = []
+for i in range(s1):
+    num_1line = input()
+    num_1.append(num_1line)
+num_1_int = 0
+for i in range(int(s1/h)):
+    x = from_mayan[''.join([num_1[j] for j in range(i*h, (i+1)*h)])]
+    num_1_int = 20*num_1_int+x
+s2 = int(input())
+num_2 = []
+for i in range(s2):
+    num_2line = input()
+    num_2.append(num_2line)
+num_2_int = 0
+for i in range(int(s2/h)):
+    x = from_mayan[''.join([num_2[j] for j in range(i*h, (i+1)*h)])]
+    num_2_int = 20*num_2_int+x
+operation = input()
+if operation == '+':
+    answer_int = num_1_int + num_2_int
+if operation == '-':
+    answer_int = num_1_int - num_2_int
+if operation == '*':
+    answer_int = num_1_int * num_2_int
+if operation == '/':
+    answer_int = num_1_int / num_2_int
+# Write an action using print
+# To debug: print("Debug messages...", file=sys.stderr)
+answer = []
+if answer_int == 0:
+    answer = [to_mayan[0][i*l:(i+1)*l] for i in range(h)]
+while answer_int > 0:
+    x = answer_int%20
+    answer_int = (answer_int-x)/20
+    for i in range(h):
+        answer.insert(0, to_mayan[x][(h-i-1)*l:(h-i)*l])
+for row in answer:
+    print(row)
