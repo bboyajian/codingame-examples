@@ -1,0 +1,22 @@
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+vs = []
+n = int(input())
+for i in input().split():
+    v = int(i)
+    vs.append(v)
+loss = 0
+min_v = min(vs)
+for i in range(n-1):
+    if vs[i]==min_v:
+        min_v = min(vs[i+1:n])
+    if min_v-vs[i]<loss:
+        loss = min_v-vs[i]
+
+# Write an action using print
+# To debug: print("Debug messages...", file=sys.stderr)
+
+print(loss)
