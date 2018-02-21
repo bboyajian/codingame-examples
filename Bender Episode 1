@@ -1,0 +1,69 @@
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+l, c = [int(i) for i in input().split()]
+grid = []
+teleporters = []
+for i in range(l):
+    row = input()
+    grid.append([x for x in row])
+    for j in range(c):
+        if row[j] == '@':
+            pos = [j, i]
+        if row[j] == 'T':
+            teleporters.append([j, i])
+# Write an action using print
+# To debug: print("Debug messages...", file=sys.stderr)
+x = pos[0]
+y = pos[1]
+path = [pos]
+sequence = []
+loop = 0
+beer = 0
+tries = ['SOUTH', 'EAST', 'NORTH', 'WEST']
+trie = 0
+directions = {'SOUTH': [0, 1], 'EAST': [1, 0], 'NORTH': [0, -1], 'WEST': [-1, 0]}
+direction = 'SOUTH'
+while loop==0 and grid[y][x]!='$':
+    if grid[y+directions[direction][1]][x+directions[direction][0]]=='#' or (grid[y+directions[direction][1]][x+directions[direction][0]]=='X' and beer==0):
+        direction = tries[trie]
+        trie += 1
+    else:
+        trie = 0
+        sequence.append(direction)
+        x += directions[direction][0]
+        y += directions[direction][1]
+        if [x, y, beer, direction, tries[0]] in path:
+            loop = 1
+        else:
+            path.append([x, y, beer, direction, tries[0]])
+        if grid[y][x] == 'X':
+            path = []
+            grid[y][x] = ' '
+        if grid[y][x] == 'S':
+            direction = 'SOUTH'
+        if grid[y][x] == 'E':
+            direction = 'EAST'
+        if grid[y][x] == 'N':
+            direction = 'NORTH'
+        if grid[y][x] == 'W':
+            direction = 'WEST'
+        if grid[y][x] == 'I':
+            if tries == ['SOUTH', 'EAST', 'NORTH', 'WEST']:
+                tries = ['WEST', 'NORTH', 'EAST', 'SOUTH']
+            else:
+                tries = ['SOUTH', 'EAST', 'NORTH', 'WEST']
+        if grid[y][x] == 'B':
+            beer = 1-beer
+        if teleporters!=[] and [x, y] == teleporters[0]:
+            [x, y] = teleporters[1]
+        elif teleporters!=[] and [x, y] == teleporters[1]:
+            [x, y] = teleporters[0]
+if loop == 0:
+    for x in sequence:
+        print(x)
+else:
+    print('LOOP')
