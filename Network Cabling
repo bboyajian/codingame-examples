@@ -1,0 +1,17 @@
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+n = int(input())
+houses = []
+for i in range(n):
+    x, y = [int(j) for j in input().split()]
+    houses.append([x, y])
+houses_y = sorted([row[1] for row in houses])
+m = math.floor((n-1)/2)
+# Write an action using print
+# To debug: print("Debug messages...", file=sys.stderr)
+answer = max([row[0] for row in houses])-min([row[0] for row in houses])+(2*m-n)*houses_y[m]-sum([houses_y[i] for i in range(m)])+sum([houses_y[i] for i in range(m, n)])
+print(answer)
